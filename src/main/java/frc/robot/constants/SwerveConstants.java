@@ -23,7 +23,7 @@ public final class SwerveConstants
         public static final boolean kTurningEncoderInverted = true;
 
         // Calculations required for driving motor conversion factors and feed forward
-        public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
+        public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
         public static final double kWheelDiameterMeters = 0.0762;
         public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
 
@@ -43,7 +43,7 @@ public final class SwerveConstants
         public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
         public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-        public static final double kDrivingP = 0.001;
+        public static final double kDrivingP = 0.001; // was 0.001
         public static final double kDrivingI = 0;    //0.001;
         public static final double kDrivingD = 0;  
             //3;
@@ -70,8 +70,8 @@ public final class SwerveConstants
     {
         // Driving Parameters - Note that these are not the maximum capable speeds of
         // the robot, rather the allowed maximum speeds
-        public static final double kMaxSpeedMetersPerSecond = 12.2;
-        public static final double kMaxAngularSpeed = 7.5 * Math.PI;
+        public static final double kMaxSpeedMetersPerSecond = 4;
+        public static final double kMaxAngularSpeed = 1.5 * Math.PI;
 
         //We should look into this
         //Slew code, makes robot move more smoothly%
@@ -116,5 +116,8 @@ public final class SwerveConstants
     /* Constants relevant to the NEO motors specifically */
     public static final class NeoMotorConstants {
         public static final double kFreeSpeedRpm = 5676;
+    }
+    public static final class VortexMotorConstants {
+        public static final double kFreeSpeedRpm = 6784;
     }
 }
