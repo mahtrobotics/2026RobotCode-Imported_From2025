@@ -310,8 +310,8 @@ public class DriveSubsystem extends SubsystemBase {
         }
 
         //Quadratic Scaling
-        xSpeed *= Math.abs(xSpeed)*0.9;
-        ySpeed *= Math.abs(ySpeed)*0.9;
+        xSpeed *= Math.abs(xSpeed)*1.3;
+        ySpeed *= Math.abs(ySpeed)*1.3;
         rot *= Math.abs(rot)*0.9;
 
 

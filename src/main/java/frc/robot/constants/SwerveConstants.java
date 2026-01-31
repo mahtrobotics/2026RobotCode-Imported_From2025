@@ -70,8 +70,8 @@ public final class SwerveConstants
     {
         // Driving Parameters - Note that these are not the maximum capable speeds of
         // the robot, rather the allowed maximum speeds
-        public static final double kMaxSpeedMetersPerSecond = 4.2;
-        public static final double kMaxAngularSpeed = 1.5 * Math.PI;
+        public static final double kMaxSpeedMetersPerSecond = 12.2;
+        public static final double kMaxAngularSpeed = 7.5 * Math.PI;
 
         //We should look into this
         //Slew code, makes robot move more smoothly%
@@ -80,9 +80,9 @@ public final class SwerveConstants
         //public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
         // Chassis configuration
-        public static final double kTrackWidth = Units.inchesToMeters(26.6);
+        public static final double kTrackWidth = Units.inchesToMeters(23.5);
         // Distance between centers of right and left wheels on robot (I'm assuming this goes with ln 74)
-        public static final double kWheelBase = Units.inchesToMeters(26.6);
+        public static final double kWheelBase = Units.inchesToMeters(23.5);
 
         // Distance between front and back wheels on robot (I'm assuming this goes with that ln 76)
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
