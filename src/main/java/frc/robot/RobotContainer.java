@@ -4,11 +4,13 @@ package frc.robot;
 import frc.robot.constants.AutoConstants;
 import frc.robot.constants.BasicConstants.ControllerConstants;
 import frc.robot.constants.MechanismConstants;
+import frc.robot.constants.ShootingConstants;
 import frc.robot.constants.SwerveConstants.SwerveDriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.MechanismSubsystem;
 import frc.robot.subsystems.PathSubsystem;
+import frc.robot.subsystems.ShootingMechanism;
 import frc.robot.subsystems.VisionSubsystem;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -48,6 +50,7 @@ public class RobotContainer {
     private final PathSubsystem m_robotPath = new PathSubsystem(m_robotDrive);
     private final ElevatorSubsystem m_robotElevator = new ElevatorSubsystem();
     private final MechanismSubsystem m_robotMechanisms = new MechanismSubsystem();
+    private final ShootingMechanism m_shootingMechanism = new ShootingMechanism();
     //private final VisionSubsystem m_robotVision = new VisionSubsystem(m_robotDrive);
     
     
@@ -98,16 +101,22 @@ public class RobotContainer {
         m_driverController.a().onTrue(Commands.runOnce(() -> m_robotPath.followpath(true)));
         m_driverController.b().onTrue(Commands.runOnce(() -> m_robotPath.followpath(false)));
 
-        m_mechanismController.b().onTrue(Commands.runOnce(() -> m_robotMechanisms.backAlgae()));
-        m_mechanismController.a().onTrue(Commands.runOnce(() -> m_robotMechanisms.frontAlgae()));
-        m_mechanismController.x().onTrue(Commands.runOnce(() -> m_robotMechanisms.slowCoral()));
-        m_mechanismController.y().onTrue(Commands.runOnce(() -> m_robotMechanisms.fastCoral()));
+
+        // NEW 2026 Mechanism Controls below
+
+        m_mechanismController.a().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
+
+        // OLD 2025 Mechanism Controls (Use as reference)
+       // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_robotMechanisms.backAlgae()));
+       // m_mechanismController.a().onTrue(Commands.runOnce(() -> m_robotMechanisms.frontAlgae()));
+       // m_mechanismController.x().onTrue(Commands.runOnce(() -> m_robotMechanisms.slowCoral()));
+       // m_mechanismController.y().onTrue(Commands.runOnce(() -> m_robotMechanisms.fastCoral()));
         //m_mechanismController.x().whileTrue(m_robotElevator.staticForwardTest());
         //m_mechanismController.y().whileTrue(m_robotElevator.staticBackwardTest());
-        m_mechanismController.povDown().onTrue(Commands.runOnce(() -> m_robotElevator.trough()));
-        m_mechanismController.povUp().onTrue(Commands.runOnce(() -> m_robotElevator.high()));
-        m_mechanismController.povLeft().onTrue(Commands.runOnce(() -> m_robotElevator.low()));
-        m_mechanismController.povRight().onTrue(Commands.runOnce(() -> m_robotElevator.middle()));
+       // m_mechanismController.povDown().onTrue(Commands.runOnce(() -> m_robotElevator.trough()));
+       // m_mechanismController.povUp().onTrue(Commands.runOnce(() -> m_robotElevator.high()));
+       // m_mechanismController.povLeft().onTrue(Commands.runOnce(() -> m_robotElevator.low()));
+       // m_mechanismController.povRight().onTrue(Commands.runOnce(() -> m_robotElevator.middle()));
 
 
 
