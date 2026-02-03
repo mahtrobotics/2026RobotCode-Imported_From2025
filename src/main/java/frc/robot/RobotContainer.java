@@ -105,6 +105,9 @@ public class RobotContainer {
         // NEW 2026 Mechanism Controls below
 
         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
+        //IMPORTANT: Shooting Mechanism was 4.1 meters away from closest point on goal when scoring.
+        m_mechanismController.b().onTrue(Commands.runOnce(() -> m_shootingMechanism.Kicker()));
+        
 
         // OLD 2025 Mechanism Controls (Use as reference)
        // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_robotMechanisms.backAlgae()));

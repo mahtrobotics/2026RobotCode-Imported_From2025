@@ -17,38 +17,66 @@ public class ShootingMechanism extends SubsystemBase{
 
     private SparkFlex ShootingSystem;
     public boolean ShootingOn = false;
+    private boolean KickerOn = false;
+    private SparkMax KickerSystem;
     
     public ShootingMechanism(){
 
         ShootingSystem = new SparkFlex(ShootingConstants.Shooter, MotorType.kBrushless);
         SmartDashboard.putBoolean("Shooting", ShootingOn);
+        KickerSystem = new SparkMax(ShootingConstants.Kicker, MotorType.kBrushless);
+        SmartDashboard.putBoolean("Kicker", KickerOn);
         
         
         }
 
         public void Shooting()
         {
-           if(ShootingSystem.get() != 0)
+           if(ShootingSystem.get() == 0)
+           {
+            
+            ShootingSystem.set(0.625);
+            ShootingOn = true;
+            System.out.println("Shots fired!");
+           }
+           else
            {
             ShootingSystem.set(0);
             ShootingOn = false;
             System.out.println("Cease fire!");
            }
-           else
-           {
-            ShootingSystem.set(0.60);
-            ShootingOn = true;
-            System.out.println("Shots fired!");
-           }
            SmartDashboard.putBoolean("Shooting", ShootingOn);
         }
         
-        public void stopShooting()
+        public void stopShooting() //Only for auto (I think)
         {
             ShootingSystem.set(0);
             ShootingOn = false;
             System.out.println("Cease fire!");
             SmartDashboard.putBoolean("Shooting", ShootingOn);
+        }
+
+         // Kicker Mechanism
+
+        public void Kicker()
+        {
+            if(KickerSystem.get() != 0)
+            {
+                KickerSystem.set(0);
+                KickerOn = false;
+            }
+            else
+            {
+                KickerSystem.set(0.1);
+                KickerOn = true;
+            }
+            SmartDashboard.putBoolean("Kicker", KickerOn);
+        }
+        public void StopKicker() //Only for auto (I think)
+        {
+            KickerSystem.set(0);
+            KickerOn = false;
+            SmartDashboard.putBoolean("Kicker", KickerOn);
         }
     
     
