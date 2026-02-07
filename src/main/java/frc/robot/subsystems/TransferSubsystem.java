@@ -25,7 +25,7 @@ public class TransferSubsystem extends SubsystemBase{
         KickerSystem = new SparkMax(ShootingConstants.Kicker, MotorType.kBrushless);
         SmartDashboard.putBoolean("Kicker", KickerOn);
         BedRollerSystem = new SparkMax(ShootingConstants.BedRoller, MotorType.kBrushless);
-        SmartDashboard.putBoolean("BedRoller", BedRollerOn);
+        SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
     }
     // Kicker Mechanism
     public void Kicker()
