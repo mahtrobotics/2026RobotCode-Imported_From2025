@@ -13,52 +13,22 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShootingConstants;
 
-public class ShootingMechanism extends SubsystemBase{
+public class TransferSubsystem extends SubsystemBase{
 
-    private SparkFlex ShootingSystem;
-    public boolean ShootingOn = false;
     private boolean KickerOn = false;
     private SparkMax KickerSystem;
-    
-    public ShootingMechanism(){
+    private boolean BedRollerOn = false;
+    private SparkMax BedRollerSystem;
 
-        ShootingSystem = new SparkFlex(ShootingConstants.Shooter, MotorType.kBrushless);
-        SmartDashboard.putBoolean("Shooting", ShootingOn);
+    public TransferSubsystem()
+    {
         KickerSystem = new SparkMax(ShootingConstants.Kicker, MotorType.kBrushless);
         SmartDashboard.putBoolean("Kicker", KickerOn);
-        
-        
-        }
-
-        public void Shooting()
-        {
-           if(ShootingSystem.get() == 0)
-           {
-            
-            ShootingSystem.set(0.625);
-            ShootingOn = true;
-            System.out.println("Shots fired!");
-           }
-           else
-           {
-            ShootingSystem.set(0);
-            ShootingOn = false;
-            System.out.println("Cease fire!");
-           }
-           SmartDashboard.putBoolean("Shooting", ShootingOn);
-        }
-        
-        public void stopShooting() //Only for auto (I think)
-        {
-            ShootingSystem.set(0);
-            ShootingOn = false;
-            System.out.println("Cease fire!");
-            SmartDashboard.putBoolean("Shooting", ShootingOn);
-        }
-
-         // Kicker Mechanism
-
-        public void Kicker()
+        BedRollerSystem = new SparkMax(ShootingConstants.BedRoller, MotorType.kBrushless);
+        SmartDashboard.putBoolean("BedRoller", BedRollerOn);
+    }
+    // Kicker Mechanism
+    public void Kicker()
         {
             if(KickerSystem.get() != 0)
             {
@@ -78,9 +48,27 @@ public class ShootingMechanism extends SubsystemBase{
             KickerOn = false;
             SmartDashboard.putBoolean("Kicker", KickerOn);
         }
-    
-    
 
+        // Bed Roller Mechanism
+        public void BedRoller()
+        {
+            if(BedRollerSystem.get() != 0)
+            {
+                BedRollerSystem.set(0);
+                BedRollerOn = false;
+            }
+            else
+            {
+                BedRollerSystem.set(0.1);
+                BedRollerOn = true;
+            }
+            SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
+        }
+        public void StopBedRoller() //Only for auto (I think)
+        {
+            BedRollerSystem.set(0);
+            BedRollerOn = false;
+            SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
+        }
 
 }
-

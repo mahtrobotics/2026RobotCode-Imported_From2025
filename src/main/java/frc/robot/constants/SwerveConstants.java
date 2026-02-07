@@ -45,7 +45,9 @@ public final class SwerveConstants
 
         public static final double kDrivingP = 0.001; // was 0.001
         public static final double kDrivingI = 0;    //0.001;
-        public static final double kDrivingD = 0;  
+        public static final double kDrivingD = 0;
+        public static final double kDrivingV = 2.11; // Motor KV value
+        
             //3;
         public static final double kDrivingFF = (1 / kDriveWheelFreeSpeedRps);
         public static final double kDrivingMinOutput = -1;
@@ -70,7 +72,7 @@ public final class SwerveConstants
     {
         // Driving Parameters - Note that these are not the maximum capable speeds of
         // the robot, rather the allowed maximum speeds
-        public static final double kMaxSpeedMetersPerSecond = 4;
+        public static final double kMaxSpeedMetersPerSecond = 4.2;
         public static final double kMaxAngularSpeed = 1.5 * Math.PI;
 
         //We should look into this

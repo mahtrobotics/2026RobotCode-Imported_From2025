@@ -8,9 +8,11 @@ import frc.robot.constants.ShootingConstants;
 import frc.robot.constants.SwerveConstants.SwerveDriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.MechanismSubsystem;
 import frc.robot.subsystems.PathSubsystem;
-import frc.robot.subsystems.ShootingMechanism;
+import frc.robot.subsystems.ShootingSubsystem;
+import frc.robot.subsystems.TransferSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -50,7 +52,9 @@ public class RobotContainer {
     private final PathSubsystem m_robotPath = new PathSubsystem(m_robotDrive);
     private final ElevatorSubsystem m_robotElevator = new ElevatorSubsystem();
     private final MechanismSubsystem m_robotMechanisms = new MechanismSubsystem();
-    private final ShootingMechanism m_shootingMechanism = new ShootingMechanism();
+    private final ShootingSubsystem m_shootingMechanism = new ShootingSubsystem();
+    private final TransferSubsystem m_TransferSubsystem = new TransferSubsystem();
+    private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
     //private final VisionSubsystem m_robotVision = new VisionSubsystem(m_robotDrive);
     
     
@@ -106,7 +110,10 @@ public class RobotContainer {
 
         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
         //IMPORTANT: Shooting Mechanism was 4.1 meters away from closest point on goal when scoring.
-        m_mechanismController.b().onTrue(Commands.runOnce(() -> m_shootingMechanism.Kicker()));
+        m_mechanismController.a().onTrue(Commands.runOnce(() -> m_TransferSubsystem.Kicker()));
+        m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
+        m_mechanismController.x().onTrue(Commands.runOnce(()-> m_IntakeSubsystem.Intake()));
+        
         
 
         // OLD 2025 Mechanism Controls (Use as reference)

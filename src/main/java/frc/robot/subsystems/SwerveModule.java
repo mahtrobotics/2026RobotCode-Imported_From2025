@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -84,13 +85,16 @@ public class SwerveModule {
         // Setting the PID constants
         m_drivingConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pidf(SwerveModuleConstants.kDrivingP, SwerveModuleConstants.kDrivingI, SwerveModuleConstants.kDrivingD, SwerveModuleConstants.kDrivingFF)
-            .outputRange(SwerveModuleConstants.kDrivingMinOutput, SwerveModuleConstants.kDrivingMaxOutput);
+            .pid(SwerveModuleConstants.kDrivingP, SwerveModuleConstants.kDrivingI, SwerveModuleConstants.kDrivingD)
+            .outputRange(SwerveModuleConstants.kDrivingMinOutput, SwerveModuleConstants.kDrivingMaxOutput)
+            .feedForward.kV(SwerveModuleConstants.kDrivingV);
+            
             
         
         m_turningConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
             .pidf(SwerveModuleConstants.kTurningP, SwerveModuleConstants.kTurningI, SwerveModuleConstants.kTurningD, SwerveModuleConstants.kTurningFF)
+        //    .pid(SwerveModuleConstants.kTurningP, SwerveModuleConstants.kTurningI, SwerveModuleConstants.kTurningD)
             .outputRange(SwerveModuleConstants.kTurningMinOutput, SwerveModuleConstants.kTurningMaxOutput);
 
         /*
@@ -189,8 +193,11 @@ public class SwerveModule {
         //SmartDashboard.putString(m_drivingSparkFlex.getDeviceId() + " driving", m_drivingPIDController.setReference(speedRPMs, SparkMax.ControlType.kVelocity).toString());
         //SmartDashboard.putString(m_turningSparkMax.getDeviceId() + " turning ", m_turningPIDController.setReference(optimizedangle, SparkMax.ControlType.kPosition).toString());
 
-        m_drivingPIDController.setReference(speedRPMs, SparkMax.ControlType.kVelocity);
-        m_turningPIDController.setReference(optimizedangle, SparkMax.ControlType.kPosition);
+        // setReference depricated from 2025
+    //    m_drivingPIDController.setReference(speedRPMs, SparkMax.ControlType.kVelocity);
+    //   m_turningPIDController.setReference(optimizedangle, SparkMax.ControlType.kPosition);
+        m_drivingPIDController.setSetpoint(speedRPMs, SparkMax.ControlType.kVelocity);
+        m_turningPIDController.setSetpoint(optimizedangle, SparkMax.ControlType.kPosition);
 
         //These should be usefull for PID tuning
         // SmartDashboard.putNumber("driving encoder - Can ID" + m_drivingSparkFlex.getDeviceId(), m_drivingEncoder.getVelocity());
