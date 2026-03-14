@@ -86,6 +86,7 @@ public class SwerveModule {
         m_drivingConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pid(SwerveModuleConstants.kDrivingP, SwerveModuleConstants.kDrivingI, SwerveModuleConstants.kDrivingD)
+         //   .pidf(SwerveModuleConstants.kDrivingP, SwerveModuleConstants.kDrivingI, SwerveModuleConstants.kDrivingD, SwerveModuleConstants.kDrivingFF)
             .outputRange(SwerveModuleConstants.kDrivingMinOutput, SwerveModuleConstants.kDrivingMaxOutput)
             .feedForward.kV(SwerveModuleConstants.kDrivingV);
             
@@ -194,7 +195,7 @@ public class SwerveModule {
         //SmartDashboard.putString(m_turningSparkMax.getDeviceId() + " turning ", m_turningPIDController.setReference(optimizedangle, SparkMax.ControlType.kPosition).toString());
 
         // setReference depricated from 2025
-    //    m_drivingPIDController.setReference(speedRPMs, SparkMax.ControlType.kVelocity);
+     //   m_drivingPIDController.setReference(speedRPMs, SparkMax.ControlType.kVelocity);
     //   m_turningPIDController.setReference(optimizedangle, SparkMax.ControlType.kPosition);
         m_drivingPIDController.setSetpoint(speedRPMs, SparkMax.ControlType.kVelocity);
         m_turningPIDController.setSetpoint(optimizedangle, SparkMax.ControlType.kPosition);

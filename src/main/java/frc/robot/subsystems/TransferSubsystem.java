@@ -16,16 +16,20 @@ import frc.robot.constants.ShootingConstants;
 public class TransferSubsystem extends SubsystemBase{
 
     private boolean KickerOn = false;
-    private SparkMax KickerSystem;
+    private SparkFlex KickerSystem;
     private boolean BedRollerOn = false;
     private SparkMax BedRollerSystem;
+    private boolean BedRoller2On = false;
+    private SparkMax BedRollerSystem2;
 
     public TransferSubsystem()
     {
-        KickerSystem = new SparkMax(ShootingConstants.Kicker, MotorType.kBrushless);
+        KickerSystem = new SparkFlex(ShootingConstants.Kicker, MotorType.kBrushless);
         SmartDashboard.putBoolean("Kicker", KickerOn);
-        BedRollerSystem = new SparkMax(ShootingConstants.BedRoller, MotorType.kBrushless);
+        BedRollerSystem = new SparkMax(ShootingConstants.BedRoller, MotorType.kBrushed);
         SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
+        BedRollerSystem2 = new SparkMax(ShootingConstants.BedRoller2, MotorType.kBrushed);
+        SmartDashboard.putBoolean( "Bed Roller2 (TEST)", BedRoller2On);
     }
     // Kicker Mechanism
     public void Kicker()
@@ -37,7 +41,7 @@ public class TransferSubsystem extends SubsystemBase{
             }
             else
             {
-                KickerSystem.set(0.1);
+                KickerSystem.set(0.5);
                 KickerOn = true;
             }
             SmartDashboard.putBoolean("Kicker", KickerOn);
@@ -55,15 +59,37 @@ public class TransferSubsystem extends SubsystemBase{
             if(BedRollerSystem.get() != 0)
             {
                 BedRollerSystem.set(0);
+                BedRollerSystem2.set(0);
                 BedRollerOn = false;
             }
             else
             {
-                BedRollerSystem.set(0.1);
+                BedRollerSystem.set(1.0);
+                BedRollerSystem2.set(1.0);
                 BedRollerOn = true;
             }
             SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
         }
+        public void test()
+        {
+            BedRollerSystem2.set(1.0);
+            System.out.println("Test 1111111111111111111111");
+        }
+        /* 
+        public void BedRoller2()
+        {
+            if (BedRollerSystem2.get() != 0)
+            {
+                BedRollerSystem2.set(0);
+                BedRoller2On = false;
+            }
+            else{
+                BedRollerSystem2.set(0.5);
+                BedRoller2On = true;
+            }
+            SmartDashboard.putBoolean("Bed Roller2 (TEST)", BedRoller2On);
+        }
+        */
         public void StopBedRoller() //Only for auto (I think)
         {
             BedRollerSystem.set(0);

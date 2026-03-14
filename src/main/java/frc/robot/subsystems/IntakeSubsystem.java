@@ -39,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase{
             }
             else
             {
-                IntakeSystem.set(0.1);
+                IntakeSystem.set(-1.0);
                 IntakeOn = true;
                 SmartDashboard.putBoolean("Intake", IntakeOn);
             }

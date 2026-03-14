@@ -30,6 +30,8 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import java.util.concurrent.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -107,12 +109,27 @@ public class RobotContainer {
 
 
         // NEW 2026 Mechanism Controls below
+        /* 
+            ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+                Runnable task = () -> Commands.runOnce(() -> m_TransferSubsystem.Kicker());
+                Runnable task1 = () -> Commands.runOnce(() -> m_TransferSubsystem.BedRoller());
 
-        m_mechanismController.a().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
-        //IMPORTANT: Shooting Mechanism was 4.1 meters away from closest point on goal when scoring.
-        m_mechanismController.a().onTrue(Commands.runOnce(() -> m_TransferSubsystem.Kicker()));
-        m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
-        m_mechanismController.x().onTrue(Commands.runOnce(()-> m_IntakeSubsystem.Intake()));
+         m_mechanismController.a().onTrue(Commands.runOnce(()-> {
+
+                .withTimeout(3000)
+                scheduler.schedule(task, 3, TimeUnit.SECONDS);
+                scheduler.schedule(task1, 3, TimeUnit.SECONDS);
+                m_shootingMechanism.Shooting();
+        }));
+        */
+         m_mechanismController.x().onTrue(Commands.runOnce(() -> m_IntakeSubsystem.Intake()));
+         m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
+        // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller2()));
+        // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.test()));
+         m_mechanismController.y().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
+         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_TransferSubsystem.Kicker()));
+         
         
         
 
