@@ -7,43 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "Test Path #1 In Room"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "High"
+            "name": "Shoot"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 5.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Coral"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Coral"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Trough"
+            "name": "StopShooting"
           }
         }
       ]
