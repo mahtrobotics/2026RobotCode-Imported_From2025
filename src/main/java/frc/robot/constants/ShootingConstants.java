@@ -12,5 +12,6 @@ public final class ShootingConstants {
     public static final int Intake = 18;
     public static final int IntakeArm = 19;
     public static final int BedRoller2 =  20;
+    public static final int Feeder = 1000;
 
 }

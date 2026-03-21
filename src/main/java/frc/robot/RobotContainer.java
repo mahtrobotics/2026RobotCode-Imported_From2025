@@ -7,7 +7,6 @@ import frc.robot.constants.MechanismConstants;
 import frc.robot.constants.ShootingConstants;
 import frc.robot.constants.SwerveConstants.SwerveDriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.MechanismSubsystem;
 import frc.robot.subsystems.PathSubsystem;
@@ -52,10 +51,9 @@ public class RobotContainer {
     //Subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final PathSubsystem m_robotPath = new PathSubsystem(m_robotDrive);
-    private final ElevatorSubsystem m_robotElevator = new ElevatorSubsystem();
     private final MechanismSubsystem m_robotMechanisms = new MechanismSubsystem();
-    private final ShootingSubsystem m_shootingMechanism = new ShootingSubsystem();
     private final TransferSubsystem m_TransferSubsystem = new TransferSubsystem();
+    private final ShootingSubsystem m_ShootingSubsystem = new ShootingSubsystem(m_TransferSubsystem);
     private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
     //private final VisionSubsystem m_robotVision = new VisionSubsystem(m_robotDrive);
     
@@ -67,7 +65,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
-        configureAutoCommands();
+     //   configureAutoCommands();
         configureSmartDashboard();
         
 
@@ -82,9 +80,6 @@ public class RobotContainer {
         
         m_robotMechanisms.setDefaultCommand(
            new RunCommand(() -> m_robotMechanisms.wrist(m_mechanismController.getLeftY()), m_robotMechanisms));
-
-        m_robotElevator.setDefaultCommand(
-            new RunCommand(() -> m_robotElevator.runElevator(), m_robotElevator));
 
         
     }
@@ -127,25 +122,19 @@ public class RobotContainer {
          m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
         // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller2()));
         // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.test()));
-         m_mechanismController.y().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
-         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_TransferSubsystem.Kicker()));
-         
-        
-        
+        // m_mechanismController.y().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
+          m_driverController.y().whileTrue(Commands.run(
+            () -> {
+                boolean isAtSpeed = m_ShootingSubsystem.isAtSpeed(-3200);
+                m_ShootingSubsystem.setShooterSpeed(-3200, false);
+                m_ShootingSubsystem.setFiring(isAtSpeed);
+            }, m_ShootingSubsystem));
+            m_driverController.povDown().whileTrue(Commands.run(
+            () -> {
+                m_ShootingSubsystem.setShooterSpeed(500, false);
+            }, m_ShootingSubsystem));
 
-        // OLD 2025 Mechanism Controls (Use as reference)
-       // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_robotMechanisms.backAlgae()));
-       // m_mechanismController.a().onTrue(Commands.runOnce(() -> m_robotMechanisms.frontAlgae()));
-       // m_mechanismController.x().onTrue(Commands.runOnce(() -> m_robotMechanisms.slowCoral()));
-       // m_mechanismController.y().onTrue(Commands.runOnce(() -> m_robotMechanisms.fastCoral()));
-        //m_mechanismController.x().whileTrue(m_robotElevator.staticForwardTest());
-        //m_mechanismController.y().whileTrue(m_robotElevator.staticBackwardTest());
-       // m_mechanismController.povDown().onTrue(Commands.runOnce(() -> m_robotElevator.trough()));
-       // m_mechanismController.povUp().onTrue(Commands.runOnce(() -> m_robotElevator.high()));
-       // m_mechanismController.povLeft().onTrue(Commands.runOnce(() -> m_robotElevator.low()));
-       // m_mechanismController.povRight().onTrue(Commands.runOnce(() -> m_robotElevator.middle()));
-
-
+         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.Kicker()));
 
         opticalTrigger.onFalse(new SequentialCommandGroup(Commands.waitSeconds(0.2), Commands.runOnce(() -> m_robotMechanisms.stopCoral())));
     }
@@ -154,6 +143,8 @@ public class RobotContainer {
      * Sets up mechanism command groups to be used in path planner
      * these must all be registered as Named Commands
      */
+
+     /* 
     private void configureAutoCommands() {
         //Remember Commands.waitSeconds() is a thing
         NamedCommands.registerCommand("Trough", new SequentialCommandGroup(Commands.runOnce(() -> m_robotElevator.trough()), Commands.waitSeconds(3)));
@@ -165,11 +156,17 @@ public class RobotContainer {
         NamedCommands.registerCommand("Stop Coral", Commands.runOnce(() -> m_robotMechanisms.stopCoral()));
         NamedCommands.registerCommand("Align Right", Commands.runOnce(() -> m_robotPath.followpath(false)));
         NamedCommands.registerCommand("Align Left", Commands.runOnce(() -> m_robotPath.followpath(true)));
-
-        
+    */
+    private void configureAutoCommands() {
+        NamedCommands.registerCommand("Shoot", new SequentialCommandGroup(Commands.runOnce(() -> m_ShootingSubsystem.Shooting())));
+        NamedCommands.registerCommand("StopShooting", new SequentialCommandGroup(Commands.runOnce(() -> m_ShootingSubsystem.stopShooting())));
 
 
     }
+        
+
+
+    
 
     private void configureSmartDashboard() {
         SmartDashboard.putData("Auto choices", m_chooser);
@@ -182,6 +179,7 @@ public class RobotContainer {
         m_chooser.addOption("One Coral Straight", new PathPlannerAuto("One Coral Straight"));
         m_chooser.addOption("Close Top", new PathPlannerAuto("Close Top"));
         m_chooser.addOption("Bottom Close", new PathPlannerAuto("Bottom Close"));
+        m_chooser.addOption("Shoot", new PathPlannerAuto("Shoot"));
 
     }
 

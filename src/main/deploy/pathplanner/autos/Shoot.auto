@@ -5,45 +5,57 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopShooting"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Middle Blue Barge to Left Top Reef"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "High"
+            "pathName": "Copy of Copy of New Path"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of New Path"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Coral Fast"
+            "name": "Shoot"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 5.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Stop Coral"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Trough"
+            "name": "StopShooting"
           }
         }
       ]
