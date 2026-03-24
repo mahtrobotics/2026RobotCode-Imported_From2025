@@ -5,6 +5,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShootingConstants;
@@ -16,6 +17,9 @@ public class IntakeSubsystem extends SubsystemBase{
     private SparkMax IntakeArmSystem;
     public boolean IntakeArmOn = false;
     double gearRatio = 6.0;
+
+    //Limit Switch
+    private DigitalInput bottomSwitch = new DigitalInput(0);
     
     public IntakeSubsystem(){
 
@@ -25,6 +29,7 @@ public class IntakeSubsystem extends SubsystemBase{
         
         SmartDashboard.putBoolean("IntakeArm", IntakeArmOn);
 
+        
        
 
         }

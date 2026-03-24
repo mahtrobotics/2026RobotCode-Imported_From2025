@@ -95,7 +95,7 @@ public final class SwerveConstants
 
 
         //The angular offsets make no sense but zeroeing absolute encoders will be necessary to fix this I think    
-        public static final int kFrontLeftDrivingCanId = 40;
+        public static final int kFrontLeftDrivingCanId = 6;
         public static final int kFrontLeftTurningCanId = 7;
         public static final double kFrontLeftChassisAngularOffset = -Math.PI/2;
         

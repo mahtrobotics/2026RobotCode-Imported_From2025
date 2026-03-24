@@ -38,6 +38,7 @@ import java.util.concurrent.*;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+    
 
     //Smart Dashboard -----------
     private final SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -134,7 +135,7 @@ public class RobotContainer {
                 m_ShootingSubsystem.setShooterSpeed(500, false);
             }, m_ShootingSubsystem));
          m_mechanismController.a().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.Kicker()));
-        // m_mechanismController.a().onTrue(Commands.run(() -> m_IntakeSubsystem.IntakeArmDown())).until(Limit Switch)).do(m_IntakeSubsystem.StopIntakeArm()); //XXX
+         m_mechanismController.a().onTrue(Commands.run(() -> m_IntakeSubsystem.IntakeArmDown())).until(Limit Switch)).finallyDo(m_IntakeSubsystem.StopIntakeArm()); //XXX
 
       //  opticalTrigger.onFalse(new SequentialCommandGroup(Commands.waitSeconds(0.2), Commands.runOnce(() -> m_robotMechanisms.stopCoral())));
     }
