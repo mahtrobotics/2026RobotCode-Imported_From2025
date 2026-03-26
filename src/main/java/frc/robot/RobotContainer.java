@@ -1,35 +1,27 @@
 package frc.robot;
 
 
-import frc.robot.constants.AutoConstants;
-import frc.robot.constants.BasicConstants.ControllerConstants;
-import frc.robot.constants.MechanismConstants;
-import frc.robot.constants.ShootingConstants;
-import frc.robot.constants.SwerveConstants.SwerveDriveConstants;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.MechanismSubsystem;
-import frc.robot.subsystems.PathSubsystem;
-import frc.robot.subsystems.ShootingSubsystem;
-import frc.robot.subsystems.TransferSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
-
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import java.util.concurrent.*;
+import frc.robot.constants.BasicConstants.ControllerConstants;
+import frc.robot.constants.MechanismConstants;
+import frc.robot.subsystems.CHATGPTShootingSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.MechanismSubsystem;
+import frc.robot.subsystems.PathSubsystem;
+import frc.robot.subsystems.ShootingSubsystem;
+import frc.robot.subsystems.TransferSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -56,6 +48,7 @@ public class RobotContainer {
     private final TransferSubsystem m_TransferSubsystem = new TransferSubsystem();
     private final ShootingSubsystem m_ShootingSubsystem = new ShootingSubsystem(m_TransferSubsystem);
     private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+    private final CHATGPTShootingSubsystem m_CHATGPTShootingSubsystem = new CHATGPTShootingSubsystem();
     //private final VisionSubsystem m_robotVision = new VisionSubsystem(m_robotDrive);
     
     
@@ -66,7 +59,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
-     //   configureAutoCommands();
+        configureAutoCommands();
         configureSmartDashboard();
         
 
@@ -120,14 +113,31 @@ public class RobotContainer {
         }));
         */
       //   m_mechanismController.x().onTrue(Commands.runOnce(() -> m_IntakeSubsystem.Intake()));
-           m_mechanismController.x().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.testLeft1()));
-           m_mechanismController.x().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.testRight1()));
+           m_mechanismController.povDown().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.testDown()));
+           m_mechanismController.povUp().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.testUp()));
 
 
-         m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
+        // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
         // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller2()));
         // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_TransferSubsystem.test()));
-        // m_mechanismController.y().onTrue(Commands.runOnce(() -> m_shootingMechanism.Shooting()));
+        // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.Shooter()));
+
+         //Intake Commands
+         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_IntakeSubsystem.Intake()));
+         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
+         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_TransferSubsystem.Feeder()));
+
+         //Shooting Commands
+        // m_mechanismController.b().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.Shooter()));
+        m_mechanismController.b().onTrue(Commands.runOnce(() -> m_CHATGPTShootingSubsystem.Shooting()));
+
+         //Kicker Commands
+         m_mechanismController.y().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.Kicker()));
+         m_mechanismController.y().onTrue(Commands.runOnce(() -> m_TransferSubsystem.Feeder()));
+         m_mechanismController.y().onTrue(Commands.runOnce(() -> m_TransferSubsystem.BedRoller()));
+
+        //Start of while logic XXX
+        /* 
           m_driverController.y().whileTrue(Commands.run(
             () -> {
                 boolean isAtSpeed = m_ShootingSubsystem.isAtSpeed(-3200);
@@ -138,7 +148,10 @@ public class RobotContainer {
             () -> {
                 m_ShootingSubsystem.setShooterSpeed(500, false);
             }, m_ShootingSubsystem));
-         m_mechanismController.a().onTrue(Commands.runOnce(() -> m_ShootingSubsystem.Kicker()));
+
+            */
+        //End of while logic XXX
+         
        //  m_mechanismController.a().onTrue(Commands.run(() -> m_IntakeSubsystem.IntakeArmUp())).until(Limit Switch)).finallyDo(m_IntakeSubsystem.StopIntakeArm()); //XXX
 
       //  opticalTrigger.onFalse(new SequentialCommandGroup(Commands.waitSeconds(0.2), Commands.runOnce(() -> m_robotMechanisms.stopCoral())));
@@ -163,9 +176,14 @@ public class RobotContainer {
         NamedCommands.registerCommand("Align Left", Commands.runOnce(() -> m_robotPath.followpath(true)));
     */
     private void configureAutoCommands() {
-        NamedCommands.registerCommand("Shoot", new SequentialCommandGroup(Commands.runOnce(() -> m_ShootingSubsystem.Shooting())));
-        NamedCommands.registerCommand("StopShooting", new SequentialCommandGroup(Commands.runOnce(() -> m_ShootingSubsystem.stopShooting())));
-
+        NamedCommands.registerCommand("Shoot", new SequentialCommandGroup(Commands.runOnce(() -> m_CHATGPTShootingSubsystem.Shooting())));
+        NamedCommands.registerCommand("StopShooting", new SequentialCommandGroup(Commands.runOnce(() -> m_CHATGPTShootingSubsystem.stopShooting())));
+        NamedCommands.registerCommand("Kicker", new SequentialCommandGroup(Commands.runOnce(() -> m_ShootingSubsystem.Kicker())));
+        NamedCommands.registerCommand("StopKicker", new SequentialCommandGroup(Commands.runOnce(() -> m_ShootingSubsystem.StopKicker())));
+        NamedCommands.registerCommand("Feeder", new SequentialCommandGroup(Commands.runOnce(() -> m_TransferSubsystem.Feeder())));
+        NamedCommands.registerCommand("StopFeeder", new SequentialCommandGroup(Commands.runOnce(() -> m_TransferSubsystem.StopFeeder())));
+        NamedCommands.registerCommand("BedRoller", new SequentialCommandGroup(Commands.runOnce(() -> m_TransferSubsystem.BedRoller())));
+        NamedCommands.registerCommand("StopBedRoller", new SequentialCommandGroup(Commands.runOnce(() -> m_TransferSubsystem.StopBedRoller())));
 
     }
         
@@ -185,6 +203,8 @@ public class RobotContainer {
         m_chooser.addOption("Close Top", new PathPlannerAuto("Close Top"));
         m_chooser.addOption("Bottom Close", new PathPlannerAuto("Bottom Close"));
         m_chooser.addOption("Shoot", new PathPlannerAuto("Shoot"));
+        m_chooser.addOption("#2 Test", new PathPlannerAuto("#2 Test"));
+        m_chooser.addOption("TEST AUTO TEST", new PathPlannerAuto("TEST AUTO TEST"));
 
     }
 
@@ -196,6 +216,7 @@ public class RobotContainer {
    */
     public Command getAutonomousCommand() {
         return new SequentialCommandGroup(Commands.waitSeconds(0.5), m_chooser.getSelected());
+        
     }
 
     public void printOutput(){

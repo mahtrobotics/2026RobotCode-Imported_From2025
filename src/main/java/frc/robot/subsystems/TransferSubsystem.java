@@ -25,7 +25,7 @@ public class TransferSubsystem extends SubsystemBase{
         BedRollerSystem = new SparkMax(ShootingConstants.BedRoller, MotorType.kBrushed);
         SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
 
-        FeederSystem = new SparkMax(ShootingConstants.Feeder, MotorType.kBrushed);
+        FeederSystem = new SparkMax(ShootingConstants.Feeder, MotorType.kBrushless);
         SmartDashboard.putBoolean("Feeder", FeederOn);
     }
 
@@ -39,7 +39,7 @@ public class TransferSubsystem extends SubsystemBase{
             }
             else
             {
-                BedRollerSystem.set(1.0);
+                BedRollerSystem.set(-0.7);
                 BedRollerOn = true;
             }
             SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
@@ -61,7 +61,7 @@ public class TransferSubsystem extends SubsystemBase{
             }
             else
             {
-                FeederSystem.set(0.5);
+                FeederSystem.set(-1);
                 FeederOn = true;
             }
             SmartDashboard.putBoolean("Feeder", FeederOn);
@@ -71,7 +71,7 @@ public class TransferSubsystem extends SubsystemBase{
         {
             FeederSystem.set(0);
             FeederOn = false;
-            SmartDashboard.putBoolean("Bed Roller", BedRollerOn);
+            SmartDashboard.putBoolean("Feeder", FeederOn);
         }
 
 }

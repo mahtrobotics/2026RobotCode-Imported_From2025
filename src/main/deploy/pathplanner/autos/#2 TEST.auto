@@ -7,43 +7,61 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "New New Path"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "High"
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kicker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Feeder"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "BedRoller"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 8.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Coral"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "name": "StopShooting"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Stop Coral"
+            "name": "StopKicker"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Trough"
+            "name": "StopFeeder"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopBedRoller"
           }
         }
       ]
