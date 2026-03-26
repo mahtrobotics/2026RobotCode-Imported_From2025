@@ -4,7 +4,7 @@ public final class MechanismConstants
 {
     public static final int CORAL_SENSOR_DIO_PORT = 0;
     public static final int ELEVATOR_LEFT_ID = 13;
-    public static final int ELEVATOR_RIGHT_ID = 15;
+   // public static final int ELEVATOR_RIGHT_ID = 15;
     public static final int CORAL_ID = 11;
     public static final int ALGAE_ROLLER_ID = 14;
     public static final int ALGAE_WRIST_ID = 12;

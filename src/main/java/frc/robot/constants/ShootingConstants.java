@@ -10,8 +10,9 @@ public final class ShootingConstants {
     public static final int Kicker = 16;
     public static final int BedRoller = 17;
     public static final int Intake = 18;
-    public static final int IntakeArm = 19;
-    public static final int BedRoller2 =  20;
-    public static final int Feeder = 1000;
+    public static final int IntakeArmLeft = 19;
+    public static final int IntakeArmRight = 20;
+    public static final int BedRoller2 =  45;
+    public static final int Feeder = 21;
 
 }

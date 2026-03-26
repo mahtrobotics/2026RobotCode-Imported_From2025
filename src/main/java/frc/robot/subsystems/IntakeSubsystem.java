@@ -25,7 +25,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
         IntakeSystem = new SparkFlex(ShootingConstants.Intake, MotorType.kBrushless);
         SmartDashboard.putBoolean("Intake", IntakeOn);
-        IntakeArmSystem = new SparkMax(ShootingConstants.IntakeArm, MotorType.kBrushless);
+       // IntakeArmSystem = new SparkMax(ShootingConstants.IntakeArmLeft, MotorType.kBrushless);
         
         SmartDashboard.putBoolean("IntakeArm", IntakeArmOn);
 

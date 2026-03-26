@@ -4,6 +4,7 @@ import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
@@ -26,6 +27,11 @@ public class ShootingSubsystem extends SubsystemBase {
     //Shooter
     private SparkFlex shootingSystem;
     public boolean ShootingOn = false;
+
+    //Test
+    private SparkMax TestLeft;
+    private SparkMax TestRight;
+
 
     private final SparkClosedLoopController shooterPID;
 /* 
@@ -58,6 +64,10 @@ public class ShootingSubsystem extends SubsystemBase {
         shooterConfig.smartCurrentLimit(40);
         shooterConfig.voltageCompensation(12); //
         shooterConfig.idleMode(SparkBaseConfig.IdleMode.kCoast); // XXX or .kBrake?
+
+        //Test
+        TestLeft = new SparkMax(ShootingConstants.IntakeArmLeft, MotorType.kBrushless);
+        TestRight = new SparkMax(ShootingConstants.IntakeArmRight, MotorType.kBrushless);
 
         
         /*
@@ -194,6 +204,27 @@ public class ShootingSubsystem extends SubsystemBase {
             KickerSystem.set(0);
             KickerOn = false;
             SmartDashboard.putBoolean("Kicker", KickerOn);
+        }
+        public void testLeft1() {
+            if(TestLeft.get() != 0)
+            {
+                TestLeft.set(0);
+            }
+            else
+            {
+                TestLeft.set(-1);
+            }
+        }
+        public void testRight1() {
+            if(TestRight.get() != 0)
+            {
+                TestRight.set(0);
+            }
+            else
+            {
+                TestRight.set(-1);
+                
+            }
         }
     
 
