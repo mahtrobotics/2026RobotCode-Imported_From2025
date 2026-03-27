@@ -61,7 +61,7 @@ public class TransferSubsystem extends SubsystemBase{
             }
             else
             {
-                FeederSystem.set(-1);
+                FeederSystem.set(0.3);
                 FeederOn = true;
             }
             SmartDashboard.putBoolean("Feeder", FeederOn);
